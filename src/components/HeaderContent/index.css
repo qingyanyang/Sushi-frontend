@@ -1,0 +1,25 @@
+.header {
+    height: 64px;
+    width: auto;
+    background-color: #d2cec8;
+    background-image: url('../../assets/header03.png');
+    background-repeat: no-repeat;
+    background-position: 0 -100px;
+    background-size: 100%;
+}
+
+.header-top, .header-bottom {
+    position: relative;
+    margin-right: 1%;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    height: 32px;
+    width: auto;
+    font-size: 12px;
+}
+
+.wel {
+    margin-right: 1%;
+    font-weight: 600;
+}
