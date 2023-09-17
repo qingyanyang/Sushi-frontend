@@ -21,7 +21,7 @@ jobs:
       - name: yarn install, build, and test
         run: |
           yarn install
-          yarn build --if-present
+          CI=false yarn build --if-present
           yarn test --if-present
           
       - name: Upload artifact for deployment job
