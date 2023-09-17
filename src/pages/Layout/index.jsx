@@ -25,10 +25,10 @@ export default function LayoutPage() {
   // the keys are corresponded to the key in menulist
   const menuItems = menuList.filter(menuItem => {
     // Check if the current menu item is in the role array
-    const isMenuItemAllowed = role.includes(menuItem.key);
+    const isMenuItemAllowed = role&&role.includes(menuItem.key);
     // If the menu item has children, filter them based on the role array
     if (menuItem.children) {
-      menuItem.children = menuItem.children.filter(child => role.includes(child.key));
+      menuItem.children = menuItem.children.filter(child => role &&role.includes(child.key));
     }
     return isMenuItemAllowed || (menuItem.children && menuItem.children.length > 0);
   });

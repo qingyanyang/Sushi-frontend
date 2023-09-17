@@ -28,7 +28,7 @@ export default function MenuListDetail() {
         category.imgs.map((img, index) => {
             return <span key={index}>
                 <img
-                    src={'http://127.0.0.1:3000/images/' + img}
+                    src={process.env.REACT_APP_BASE_IMG_URL + img}
                     alt={img}
                     style={{
                         width: '250px'

@@ -3,26 +3,25 @@ import PropTypes from 'prop-types';
 import ImgCrop from 'antd-img-crop';
 import { Upload, message } from 'antd'
 import {reqDeleteImg} from '../../api'
-import {BASE_IMG_URL} from '../../utils/constants'
+
 PicturesWall.protoTypes = {
     getImagName: PropTypes.func.isRequired
 }
 export default function PicturesWall(props) {
     const {imgs} = props
-    console.log('imgs:',imgs)
     let fileListtemp = []
     if(imgs&&imgs.length>0){
         fileListtemp=imgs.map((img,index)=>({
             uid:-index,
             name:img,
             status:'done',
-            url: BASE_IMG_URL+img
+            url: process.env.REACT_APP_BASE_IMG_URL+img
         }))
     }
     const [fileList, setFileList] = useState(fileListtemp);
 
     const onChangeUpload = async ({ fileList: newFileList,file }) => {
-        console.log('file', file)
+        console.log('file:::', file)
         if(file.status==='done'){
             const result = file.response;
             if(result.status===0){
@@ -69,7 +68,7 @@ export default function PicturesWall(props) {
     return (
         <ImgCrop rotationSlider>
             <Upload
-                action="/manage/img/upload"
+                action={`${process.env.REACT_APP_BASE_URL}/manage/img/upload`}
                 listType="picture-card"
                 accept='image/*'
                 name='image'
