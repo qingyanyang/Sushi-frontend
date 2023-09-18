@@ -22,6 +22,7 @@ jobs:
         run: |
           yarn install
           CI=false yarn build
+          cp web.config ./dist/
           yarn test --passWithNoTests
           
       - name: Upload artifact for deployment job
