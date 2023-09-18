@@ -50,4 +50,4 @@ jobs:
           app-name: 'sushi-management-system'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_CBCA8907A84C4181B6367657F619A391 }}
-          package: .
+          package: ./dist
