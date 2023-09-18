@@ -1,10 +1,18 @@
 const path = require('path');
 
 module.exports = {
+    mode: 'production',
     entry: './src/index.js',
+    // devServer: {
+    //     static: path.join(__dirname, 'public'),
+    //     compress: true,
+    //     port: 8080,
+    //     historyApiFallback: true,
+    // },
     output: {
         filename: '[name].bundle.js', 
         path: path.resolve(__dirname, 'dist'),
+        publicPath: '/',
     },
     resolve: {
         extensions: ['.js', '.jsx'],
