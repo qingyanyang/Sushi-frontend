@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
@@ -53,6 +54,10 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: './public/index.html'
+        }),
+        new webpack.DefinePlugin({
+            'process.env.REACT_APP_BASE_IMG_URL': JSON.stringify(process.env.REACT_APP_BASE_IMG_URL),
+            'process.env.REACT_APP_BASE_URL': JSON.stringify(process.env.REACT_APP_BASE_URL),
         }),
     ],
 };
