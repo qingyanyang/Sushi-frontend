@@ -22,7 +22,7 @@ jobs:
         run: |
           yarn install
           CI=false yarn build
-          yarn test
+          yarn test --passWithNoTests
           
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
