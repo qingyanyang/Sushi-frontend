@@ -6,7 +6,6 @@ import LinkButton from '../../components/LinkButton'
 import { reqStorageItems, reqStorageCategory, reqSearchStorageItems, reqUpdateStorageItemStorage, reqStorageItemsSort, reqOperationRecordAdd } from '../../api'
 import { PAGE_SIZE } from '../../utils/constants'
 import { convertDate, convertTime } from '../../utils/dateUtils'
-import './index.css'
 import storageUtils from '../../utils/storageUtils'
 
 let amountFinal = 0
@@ -77,7 +76,7 @@ export default function StorageListHome() {
                             <Button
                                 type='primary'
                                 onClick={() => { showAddStorage(amount, record) }}
-                                style={{ backgroundColor: 'green', height: '25px', width: '40px', fontSize: '11px', marginRight: '5px' }}
+                                style={{ backgroundColor: '#CE7675', height: '25px', width: '40px', fontSize: '11px', marginRight: '5px' }}
                             >
                                 <PlusOutlined />
                             </Button>
@@ -87,7 +86,7 @@ export default function StorageListHome() {
                                 type='primary'
                                 disabled={amount <= 0 ? true : false}
                                 onClick={() => { showMinStorage(amount, record) }}
-                                style={{ backgroundColor: `${amount <= 0 ? 'lightGrey' : '#1890ff'}`, height: '25px', width: '40px', fontSize: '11px', marginRight: '5px' }}
+                                style={{ backgroundColor: `${amount <= 0 ? 'lightGrey' : '#E1DCCF'}`, height: '25px', width: '40px', fontSize: '11px', marginRight: '5px' }}
                             >
                                 <MinusOutlined />
                             </Button>

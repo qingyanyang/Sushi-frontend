@@ -62,8 +62,14 @@ export default function LayoutPage() {
   }, [user, navigate])
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
-      <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
+    <Layout  style={{ minHeight: '100vh' }}>
+      <Sider 
+        style={{
+          background: '#1d1d1c',
+        }}
+        // collapsible 
+        collapsed={collapsed} 
+        onCollapse={(value) => setCollapsed(value)}>
         <div className='title'></div>
         <Menu theme="dark" defaultSelectedKeys={['order']} mode="inline" items={menuItems} />
       </Sider>

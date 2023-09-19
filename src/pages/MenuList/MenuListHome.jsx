@@ -59,7 +59,7 @@ export default function MenuListHome() {
                             <Button
                                 type='primary'
                                 onClick={() => { updateItemsStatus(_id, status === 1 ? 0 : 1) }}
-                                style={{ backgroundColor: (status === 1 ? 'gray' : '#1890ff') }}
+                                style={{ backgroundColor: (status === 1 ? 'lightgray' : '#CE7675') }}
                             >
                                 {status === 1 ? 'off shelves' : 'on shelves'}
                             </Button>
