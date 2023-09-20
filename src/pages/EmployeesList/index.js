@@ -117,24 +117,27 @@ export default function Index() {
         }
         setModalshow('0')
     }
+    
+    const handleOk = async () =>{
+        setModalshow('0')
+        const res = await reqDeleteEmployee(employeeSelected._id)
+        const data = res.data
+        if (data.status === 0) {
+            getEmployee()
+            setEmployeeSelected({})
+            message.success('delete employee successfully!')
+        } else {
+            message.error('delete employee failed!')
+        }
+    }
+
+    const handleCancelDelete = async () => {
+        setModalshow('0')
+    }
 
     const handleDeleteEmployee = (employeeSelected) => {
-        Modal.confirm({
-            title: 'Do you Want to delete this employee?',
-            icon: <ExclamationCircleFilled />,
-            async onOk() {
-                setModalshow('0')
-                const res = await reqDeleteEmployee(employeeSelected._id)
-                const data = res.data
-                if (data.status === 0) {
-                    getEmployee()
-                    setEmployeeSelected({})
-                    message.success('delete employee successfully!')
-                } else {
-                    message.error('delete employee failed!')
-                }
-            }
-        })
+        setEmployeeSelected(employeeSelected)
+        setModalshow('4')
     }
 
     const handleCancel = () => {
@@ -258,6 +261,14 @@ export default function Index() {
                     roles={roles}
                 />
             </Modal>
+            <Modal
+                title="Do you want to delete this employee?"
+                open={showModal === '4'}
+                onOk={handleOk}
+                onCancel={handleCancelDelete}
+                icon={<ExclamationCircleFilled />}
+                width="370px"
+            />
         </Card>
     )
 }

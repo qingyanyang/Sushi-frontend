@@ -8,6 +8,8 @@ import LinkButton from '../../components/LinkButton'
 import { reqRoles, reqDeleteEmployeesRecord, reqEmployeesRecords } from '../../api'
 
 export default function Index() {
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [employeeSelected, setEmployeeSelected] = useState({});
     const [columns, setColumns] = useState([])
     const [loading, setLoading] = useState(false)
     const [employees, setEmployees] = useState([])
@@ -75,23 +77,26 @@ export default function Index() {
         ])
     }
 
-    const handleDeleteEmployee = (employeeSelected) => {
-        Modal.confirm({
-            title: 'Do you Want to delete this employee?',
-            icon: <ExclamationCircleFilled />,
-            async onOk() {
-                const res = await reqDeleteEmployeesRecord(employeeSelected._id)
-                const data = res.data
-                if (data.status === 0) {
-                    getEmployeeRecords()
-                    message.success('delete record successfully!')
-                } else {
-                    message.error('delete record failed!')
-                }
-            }
-        })
+    const handleOk = async () =>{
+        setIsModalVisible(false)
+        const res = await reqDeleteEmployeesRecord(employeeSelected._id)
+        const data = res.data
+        if (data.status === 0) {
+            getEmployeeRecords()
+            message.success('delete record successfully!')
+        } else {
+            message.error('delete record failed!')
+        }
     }
 
+    const handleCancel = () => {
+        setIsModalVisible(false);
+    }
+
+    const handleDeleteEmployee = (employeeSelected) => {
+        setIsModalVisible(true)
+        setEmployeeSelected(employeeSelected)
+    }
 
     const handleInputChange = (e) => {
         setSearchType('name')
@@ -119,7 +124,7 @@ export default function Index() {
             //get data arr
             setRoles(data.data)
         } else {
-            message.error('获取分类列表失败')
+            message.error('fail to get list')
         }
     }
     //only once
@@ -157,21 +162,31 @@ export default function Index() {
     )
 
     return (
-        <Card
-            title={title}
-            style={{
-                width: '100%'
-            }}
-        >
-            <Table
-                rowKey='_id'
-                loading={loading}
-                dataSource={employees}
-                columns={columns}
-                pagination={{
-                    defaultPageSize: PAGE_SIZE,
-                    showQuickJumper: true,
-                }} />
-        </Card>
+        <>
+            <Card
+                title={title}
+                style={{
+                    width: '100%'
+                }}
+            >
+                <Table
+                    rowKey='_id'
+                    loading={loading}
+                    dataSource={employees}
+                    columns={columns}
+                    pagination={{
+                        defaultPageSize: PAGE_SIZE,
+                        showQuickJumper: true,
+                    }} />
+            </Card>
+            <Modal
+                title="Do you Want to delete this employee?"
+                open={isModalVisible}
+                onOk={handleOk}
+                onCancel={handleCancel}
+                icon={<ExclamationCircleFilled />}
+                width="370px"
+            />
+        </>
     )
 }

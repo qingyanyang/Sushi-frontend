@@ -7,25 +7,30 @@ import { formateDate } from '../../utils/dateUtils'
 import storageUtils from '../../utils/storageUtils'
 import LinkButton from '../../components/LinkButton'
 
+
 export default function Index() {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
   const [date, setDate] = useState({
     currentTime: formateDate(Date.now())
   });
+
   const navigate = useNavigate()
 
-  const logOut = () => {
-    Modal.confirm({
-      title: 'Are you sure you want to log out?',
-      icon: <ExclamationCircleFilled />,
-      content: '',
-      width: '280px',
+  const showConfirmModal = () => {
+    setIsModalVisible(true);
+  };
 
-      onOk() {
-        storageUtils.deleteUser()
-        navigate('/', { replace: true })
-      }
-    })
-  }
+  const handleOk = () => {
+    storageUtils.deleteUser();
+    navigate('/', { replace: true });
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+  
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -38,11 +43,12 @@ export default function Index() {
 
   return (
     <div className='header'>
+      
       <div className='header-top'>
         <span className='wel'>{storageUtils.getUser().username}</span>
         <LinkButton
           style={{ marginRight: '.7%' }}
-          onClick={logOut}>Logout</LinkButton>
+          onClick={showConfirmModal}>Logout</LinkButton>
       </div>
       <div className='header-bottom'>
         <span
@@ -52,8 +58,15 @@ export default function Index() {
         >{date.currentTime} &nbsp;
           <FieldTimeOutlined />
         </span>
-
       </div>
+      <Modal
+        title="Are you sure you want to log out?"
+        open={isModalVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        icon={<ExclamationCircleFilled />}
+        width="350px"
+      />
     </div>
   )
 }

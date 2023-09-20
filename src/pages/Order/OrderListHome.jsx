@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { BarChartOutlined, SearchOutlined, ExclamationCircleFilled } from '@ant-design/icons'
 import { useNavigate, Outlet } from 'react-router-dom';
-import { Card, Table, Button, Modal, Input, Tooltip } from 'antd'
+import { Card, Table, Button, Modal, Input, Tooltip, message } from 'antd'
 import LinkButton from '../../components/LinkButton'
 import { reqOrders, reqSearchOrders, reqDeleteOrder } from '../../api'
 import { PAGE_SIZE } from '../../utils/constants'
@@ -19,6 +19,9 @@ export default function OrderList() {
     const [pageNum, setPageNum] = useState(pageNumGlobal)
     const [searchType, setSearchType] = useState('')
     const [searchName, setSearchName] = useState('')
+    const [showModal, setShowModal] = useState(false)
+    const [category, setCategory] = useState({})
+
 
     const navigate = useNavigate()
 
@@ -86,19 +89,25 @@ export default function OrderList() {
             }
         ])
     }
+    const handleCancelDelete = () =>{
+        setShowModal(false)
+    }
+
+    const handleOk = async() =>{
+        setShowModal(false)
+        const res = await reqDeleteOrder(category._id)
+        const data = res.data
+        if (data.status === 0) {
+            getItems(pageNumGlobal)
+            message.success('delete order successfully!')
+        }else{
+            message.error('delete order failed!')
+        }
+    }
 
     const showDeleteForm = (category) => {
-        Modal.confirm({
-            title: 'Do you Want to delete this item?',
-            icon: <ExclamationCircleFilled />,
-            async onOk() {
-                const res = await reqDeleteOrder(category._id)
-                const data = res.data
-                if (data.status === 0) {
-                    getItems(pageNumGlobal)
-                }
-            }
-        })
+        setCategory(category)
+        setShowModal(true)
     }
 
     const showRankPage = () => {
@@ -170,26 +179,36 @@ export default function OrderList() {
     )
 
     return (
-        <Card
-            title={title}
-            extra={extra}
-            style={{
-                width: '100%'
-            }}
-        >
-            <Table
-                loading={loading}
-                rowKey='_id'
-                dataSource={itemList}
-                columns={columns}
-                pagination={{
-                    total: total,
-                    showSizeChanger: false,
-                    defaultPageSize: PAGE_SIZE,
-                    showQuickJumper: true,
-                    onChange: page => setPageNum(page)//input page number 
-                }} />
-            <Outlet />
-        </Card>
+        <>
+            <Card
+                title={title}
+                extra={extra}
+                style={{
+                    width: '100%'
+                }}
+            >
+                <Table
+                    loading={loading}
+                    rowKey='_id'
+                    dataSource={itemList}
+                    columns={columns}
+                    pagination={{
+                        total: total,
+                        showSizeChanger: false,
+                        defaultPageSize: PAGE_SIZE,
+                        showQuickJumper: true,
+                        onChange: page => setPageNum(page)//input page number 
+                    }} />
+                <Outlet />
+            </Card>
+            <Modal
+                title="Do you Want to delete this item?"
+                open={showModal}
+                onOk={handleOk}
+                onCancel={handleCancelDelete}
+                icon={<ExclamationCircleFilled />}
+                width="370px"
+            />
+        </>
     )
 }

@@ -84,6 +84,19 @@ export default function Index() {
     setModalshow('3')
   }
 
+  const handleOk = async () =>{
+      setModalshow('0')
+      const res = await reqDeleteRole(role._id)
+      const data = res.data
+      if (data.status === 0) {
+        message.success('delete role successfully!')
+        getRoles()
+        setRole({})
+      } else {
+        message.error('delete role failed!')
+      }
+    }
+
   //onOk
   const updateRoleName = async () => {
     setModalshow('0')
@@ -101,23 +114,9 @@ export default function Index() {
   const handleDeleteRoleName = (category) => {
     setRole(category)
     roleSelect = category
-    Modal.confirm({
-      title: 'Do you want to delete this role?',
-      icon: <ExclamationCircleFilled />,
-      async onOk() {
-        setModalshow('0')
-        const res = await reqDeleteRole(category._id)
-        const data = res.data
-        if (data.status === 0) {
-          message.success('delete role successfully!')
-          getRoles()
-          setRole({})
-        } else {
-          message.error('delete role failed!')
-        }
-      }
-    })
+    setModalshow("4")
   }
+
   const addRole = async () => {
     setModalshow('0')
     const res = await reqAddRole(form.getFieldsValue().name, form.getFieldsValue().rate, formateDate(Date.now()))
@@ -134,7 +133,6 @@ export default function Index() {
   }
 
   const updateRoleAuth = async () => {
-    console.log('updateRole', checkedKeys)
     setModalshow('0')
     if (checkedKeys.length !== 0) {
       const res = await reqUpdateRoleAuth(role._id, checkedKeys, formateDate(Date.now()))
@@ -158,7 +156,9 @@ export default function Index() {
     setModalshow('0')
     form.resetFields()
   }
-
+  const handleCancelDelete = () =>{
+    setModalshow('0')
+  }
   const getCheck = (checkedKeys) => {
     if (!checkedKeys || !Array.isArray(checkedKeys) || checkedKeys.length === 0) {
       console.warn('Invalid or empty checkedKeys');
@@ -254,6 +254,14 @@ export default function Index() {
           getForm={getForm}
         />
       </Modal>
+      <Modal
+        title="Do you want to delete this role?"
+        open={showModal === '4'}
+        onOk={handleOk}
+        onCancel={handleCancelDelete}
+        icon={<ExclamationCircleFilled />}
+        width="370px"
+      />
     </Card>
   )
 }

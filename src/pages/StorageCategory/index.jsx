@@ -70,24 +70,26 @@ export default function Index() {
         }
     }
 
+    const handleCancelDelete = () => {
+        setModalshow('0')
+    }
+
+    const handleOk = async () => {
+        setModalshow('0')
+        const res = await reqDeleteStorageCategory(category._id)
+        const data = res.data
+        if (data.status === 0) {
+            message.success('delete category successfully!')
+            getCategorys()
+            setCategory({})
+        } else {
+            message.error('delete category failed!')
+        }
+    }
+
     const handleDeleteCategory = (category) => {
+        setModalshow('4')
         setCategory(category)
-        Modal.confirm({
-            title: 'Do you Want to delete this role?',
-            icon: <ExclamationCircleFilled />,
-            async onOk() {
-                setModalshow('0')
-                const res = await reqDeleteStorageCategory(category._id)
-                const data = res.data
-                if (data.status === 0) {
-                    message.success('delete role successfully!')
-                    getCategorys()
-                    setCategory({})
-                } else {
-                    message.error('delete role failed!')
-                }
-            }
-        })
     }
     const addCategory = async () => {
         const name = form.getFieldsValue().input
@@ -178,6 +180,14 @@ export default function Index() {
                     category={category}
                 />
             </Modal>
+            <Modal
+                title="Do you Want to delete this category?"
+                open={showModal === '4'}
+                onOk={handleOk}
+                onCancel={handleCancelDelete}
+                icon={<ExclamationCircleFilled />}
+                width="370px"
+            />
         </Card>
     )
 }

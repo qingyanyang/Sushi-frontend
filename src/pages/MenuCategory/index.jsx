@@ -55,15 +55,14 @@ export default function Index() {
         setModalshow('2')
     }
 
+    const handleOk = () => {
+        deleteCategory()
+        setModalshow('0')
+    }
+
     const showDeleteCategory = (category)=>{
         selectCategory = category
-        Modal.confirm({
-            title: 'Do you want to delete this category?',
-            icon: <ExclamationCircleFilled />,
-            onOk() {
-                deleteCategory()
-            }
-        })
+        setModalshow('4')
     }
 
     //onOK method
@@ -77,9 +76,16 @@ export default function Index() {
         const data = result.data
         if (data.status === 0) {
             getCategory()
+            message.success('add category successfully!')
+        }else{
+            message.error('add category failed!')
         }
-        
     }
+
+    const handleCancelDelete = () => {
+        setModalshow('0')
+    }
+
     const updateCategory = async () => {
         let receivedData = form.getFieldsValue()
         let input = receivedData.input || '';
@@ -91,6 +97,9 @@ export default function Index() {
         const data = result.data
         if (data.status===0){
             getCategory()
+            message.success('update category successfully!')
+        }else{
+            message.error('update category failed!')
         }
     }
 
@@ -99,7 +108,10 @@ export default function Index() {
         const result = await reqDeleteCategory(categoryId)
         const data = result.data
         if (data.status === 0) {
+            message.success('delete category successfully!')
             getCategory()
+        }else{
+            message.error('delete category failed!')
         }
     }
 
@@ -200,6 +212,14 @@ export default function Index() {
                 getForm={getForm}
                 />
             </Modal>
+            <Modal
+                title="Do you want to delete this category?"
+                open={showModal === '4'}
+                onOk={handleOk}
+                onCancel={handleCancelDelete}
+                icon={<ExclamationCircleFilled />}
+                width="370px"
+            />
         </Card>
     )
 }
