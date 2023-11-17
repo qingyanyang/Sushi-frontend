@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import {
-    Card,
-    Button,
-    Cascader,
-    Form,
-    Input,
-    InputNumber,
-    Select,
-    message
-} from 'antd';
+import React, { useState, useEffect, Suspense } from 'react';
+
+// Lazy load Ant Design components
+import Card from 'antd/es/card';
+import Cascader from 'antd/es/cascader';
+import Button from 'antd/es/button';
+import message from 'antd/es/message';
+import Select from 'antd/es/select';
+import InputNumber from 'antd/es/input-number';
+import Input from 'antd/es/input';
+import Form from 'antd/es/form';
+
 import { LeftOutlined } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
-import PicturesWall from './PicturesWall';
 import { reqStorageCategory, reqAddOrUpdateStorageItem } from '../../api'
+
+const PicturesWall = React.lazy(() => import('./PicturesWall'));
 
 export default function StorageListAddUpdate() {
     const { Option } = Select
@@ -140,6 +142,7 @@ export default function StorageListAddUpdate() {
     )
 
     return (
+        <Suspense fallback={<div>Loading...</div>}>
         <Card
             title={title}
         >
@@ -288,5 +291,6 @@ export default function StorageListAddUpdate() {
 
             </Form>
         </Card>
+        </Suspense>
     )
 }

@@ -1,9 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-import {
-    Form,
-    Input,
-    Select
-} from 'antd';
+import Form from 'antd/es/form';
+import Input from 'antd/es/input';
+import Select from 'antd/es/select';
 import './EmployeesList.css'
 
 export default function AddUpdateForm({ getForm, roles, employeeSelected }) {

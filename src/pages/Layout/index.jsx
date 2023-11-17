@@ -1,10 +1,16 @@
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
+
+import Layout from 'antd/es/layout';
+import Breadcrumb from 'antd/es/breadcrumb';
+import Menu from 'antd/es/menu';
+import theme from 'antd/es/theme';
+
 import { useNavigate, Outlet, useLocation } from 'react-router-dom';
 import storageUtils from '../../utils/storageUtils';
 import menuList from '../../config/menuConfig';
-import HeaderContent from '../../components/HeaderContent';
 import './Layout.css';
+
+const HeaderContent = React.lazy(() => import('../../components/HeaderContent'));
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -62,6 +68,7 @@ export default function LayoutPage() {
   }, [user, navigate])
 
   return (
+    <Suspense fallback={<div>Loading...</div>}>
     <Layout  style={{ minHeight: '100vh' }}>
       <Sider 
         style={{
@@ -112,5 +119,6 @@ export default function LayoutPage() {
         <Footer />
       </Layout>
     </Layout>
+    </Suspense>
   );
 };

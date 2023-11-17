@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-import { Form, Input } from 'antd';
 
+import Form from 'antd/es/form';
+import Input from 'antd/es/input';
 
 export default function CategoryName({ getForm, selectCategory }) {
   const [form] = Form.useForm();

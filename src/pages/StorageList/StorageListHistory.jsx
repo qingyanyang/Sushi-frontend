@@ -1,11 +1,17 @@
-import { Card, Modal, Table } from 'antd'
+import React, { useEffect, useState, Suspense } from 'react'
+// Lazy load Ant Design components
+import Card from 'antd/es/card';
+import Modal from 'antd/es/modal';
+import Table from 'antd/es/table';
+
 import { LeftOutlined, ExclamationCircleFilled } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom';
-import React, { useEffect, useState } from 'react'
 import { reqOperationRecord, reqOperationRecordDelete, reqStorageItems } from '../../api'
-import LinkButton from '../../components/LinkButton'
 import { PAGE_SIZE } from '../../utils/constants'
 import { convertDate, convertTime } from '../../utils/dateUtils'
+
+// Lazy load custom components
+const LinkButton = React.lazy(() => import('../../components/LinkButton'));
 
 export default function StorageListDetail() {
   const navigate = useNavigate()
@@ -131,6 +137,7 @@ export default function StorageListDetail() {
   )
 
   return (
+    <Suspense fallback={<div>Loading...</div>}>
     <Card
       title={title}
     >
@@ -145,5 +152,6 @@ export default function StorageListDetail() {
           showQuickJumper: true,
         }} />
     </Card>
+    </Suspense>
   )
 }

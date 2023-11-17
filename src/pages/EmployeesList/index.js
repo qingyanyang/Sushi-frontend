@@ -1,12 +1,21 @@
-import { PlusOutlined, ExclamationCircleFilled, SearchOutlined } from '@ant-design/icons'
-import React from 'react'
-import { useState, useEffect } from 'react'
-import { Card, Table, Button, message, Modal, Select, Input } from 'antd'
+import React, { useState, useEffect, Suspense } from 'react';
 import { formateDate } from '../../utils/dateUtils'
 import { PAGE_SIZE } from '../../utils/constants'
-import LinkButton from '../../components/LinkButton'
 import { reqRoles, reqAddEmployee, reqUpdateEmployee, reqDeleteEmployee, reqEmployeesSearch } from '../../api'
-import AddUpdateForm from './AddUpdateForm'
+
+import Card from 'antd/es/card';
+import Table from 'antd/es/table';
+import Button from 'antd/es/button';
+import message from 'antd/es/message';
+import Modal from 'antd/es/modal';
+import Select from 'antd/es/select';
+import Input from 'antd/es/input';
+import { PlusOutlined, ExclamationCircleFilled, SearchOutlined } from '@ant-design/icons';
+
+// Lazy load custom components as well
+const AddUpdateForm = React.lazy(() => import('./AddUpdateForm'));
+const LinkButton = React.lazy(() => import('../../components/LinkButton'));
+
 
 
 
@@ -226,49 +235,51 @@ export default function Index() {
         </span>
     )
     return (
-        <Card
-            title={title}
-            extra={extra}
-            style={{
-                width: '100%'
-            }}
-        >
-            <Table
-                rowKey='_id'
-                loading={loading}
-                dataSource={employees}
-                columns={columns}
-                pagination={{
-                    defaultPageSize: PAGE_SIZE,
-                    showQuickJumper: true,
-                }} />
-            <Modal title='add employee'
-                open={showModal === '1'}
-                onOk={addUpdateEmployee}
-                onCancel={handleCancel}>
-                <AddUpdateForm
-                    getForm={getForm}
-                    roles={roles}
+        <Suspense fallback={<div>Loading...</div>}>
+            <Card
+                title={title}
+                extra={extra}
+                style={{
+                    width: '100%'
+                }}
+            >
+                <Table
+                    rowKey='_id'
+                    loading={loading}
+                    dataSource={employees}
+                    columns={columns}
+                    pagination={{
+                        defaultPageSize: PAGE_SIZE,
+                        showQuickJumper: true,
+                    }} />
+                <Modal title='add employee'
+                    open={showModal === '1'}
+                    onOk={addUpdateEmployee}
+                    onCancel={handleCancel}>
+                    <AddUpdateForm
+                        getForm={getForm}
+                        roles={roles}
+                    />
+                </Modal>
+                <Modal title='update employee infomation'
+                    open={showModal === '2'}
+                    onOk={addUpdateEmployee}
+                    onCancel={handleCancel}>
+                    <AddUpdateForm
+                        employeeSelected={employeeSelected}
+                        getForm={getForm}
+                        roles={roles}
+                    />
+                </Modal>
+                <Modal
+                    title="Do you want to delete this employee?"
+                    open={showModal === '4'}
+                    onOk={handleOk}
+                    onCancel={handleCancelDelete}
+                    icon={<ExclamationCircleFilled />}
+                    width="370px"
                 />
-            </Modal>
-            <Modal title='update employee infomation'
-                open={showModal === '2'}
-                onOk={addUpdateEmployee}
-                onCancel={handleCancel}>
-                <AddUpdateForm
-                    employeeSelected={employeeSelected}
-                    getForm={getForm}
-                    roles={roles}
-                />
-            </Modal>
-            <Modal
-                title="Do you want to delete this employee?"
-                open={showModal === '4'}
-                onOk={handleOk}
-                onCancel={handleCancelDelete}
-                icon={<ExclamationCircleFilled />}
-                width="370px"
-            />
-        </Card>
+            </Card>
+        </Suspense>
     )
 }

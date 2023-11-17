@@ -1,7 +1,11 @@
 import React, { useState,useEffect} from 'react';
 import PropTypes from 'prop-types';
 import ImgCrop from 'antd-img-crop';
-import { Upload, message } from 'antd'
+
+// Lazy load Ant Design components
+import Upload from 'antd/es/upload';
+import message from 'antd/es/message';
+
 import {reqDeleteImg} from '../../api'
 
 PicturesWall.protoTypes = {

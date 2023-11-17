@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Input, Form, Tree } from 'antd';
-import menuList from '../../config/menuConfig'
+import menuList from '../../config/menuConfig';
+import Tree from 'antd/es/tree';
+import Form from 'antd/es/form';
+import Input from 'antd/es/input';
 
 SetAuthForm.protoTypes = {
   getFormValue: PropTypes.func.isRequired

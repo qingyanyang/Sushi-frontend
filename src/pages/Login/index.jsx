@@ -1,5 +1,11 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Form, Input, message } from 'antd';
+
+// Lazy load Ant Design components
+import Form from 'antd/es/form';
+import Button from 'antd/es/button';
+import message from 'antd/es/message';
+import Input from 'antd/es/input';
+
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { reqLogin } from '../../api'

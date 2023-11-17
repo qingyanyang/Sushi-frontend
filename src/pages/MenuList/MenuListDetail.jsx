@@ -1,8 +1,12 @@
-import { Card, List, Typography } from 'antd'
 import { LeftOutlined } from '@ant-design/icons'
 import { useNavigate, useLocation } from 'react-router-dom';
 import React, { useEffect, useState } from 'react'
 import { reqCategoryName } from '../../api'
+
+// Lazy load Ant Design components
+import Card from 'antd/es/card';
+import List from 'antd/es/list';
+import Typography from 'antd/es/typography';
 
 export default function MenuListDetail() {
     const navigate = useNavigate()

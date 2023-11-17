@@ -1,4 +1,8 @@
-import { Card, List, Typography } from 'antd'
+// Lazy load Ant Design components
+import Card from 'antd/es/card';
+import List from 'antd/es/list';
+import Typography from 'antd/es/typography';
+
 import { LeftOutlined } from '@ant-design/icons'
 import { useNavigate, useLocation } from 'react-router-dom';
 import React from 'react'

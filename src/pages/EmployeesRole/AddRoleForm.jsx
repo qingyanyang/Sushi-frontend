@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Input, Form } from 'antd';
+import Form from 'antd/es/form';
+import Input from 'antd/es/input';
 
 AddRoleForm.protoTypes = {
   getFormValue: PropTypes.func.isRequired

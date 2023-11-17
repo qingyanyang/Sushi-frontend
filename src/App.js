@@ -2,7 +2,7 @@
 import {useRoutes} from 'react-router-dom'
 import "./index.css"
 import routes from "./routes"
-import { ConfigProvider } from 'antd';
+import ConfigProvider from 'antd/es/config-provider';
 
 
 function App() {

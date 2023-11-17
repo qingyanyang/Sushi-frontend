@@ -1,20 +1,23 @@
-import React, { useState, useEffect, useRef } from 'react';
-import {
-    Card,
-    Button,
-    Cascader,
-    Form,
-    Input,
-    InputNumber,
-    message
-} from 'antd';
-import { LeftOutlined } from '@ant-design/icons';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import RichTextEditor from './RichTextEditor';
-import PicturesWall from './PicturesWall';
-import './index.css'
+import { LeftOutlined } from '@ant-design/icons';
+
+// Lazy load Ant Design components
+import Card from 'antd/es/card';
+import Cascader from 'antd/es/cascader';
+import Button from 'antd/es/button';
+import message from 'antd/es/message';
+import InputNumber from 'antd/es/input-number';
+import Input from 'antd/es/input';
+import Form from 'antd/es/form';
+
 import { reqCategorys } from '../../api'
 import { reqAddOrUpdateItem } from '../../api'
+import './index.css'
+
+// Lazy load custom components
+const RichTextEditor = React.lazy(() => import('./RichTextEditor'));
+const PicturesWall = React.lazy(() => import('./PicturesWall'));
 
 
 let parentID = '0'
@@ -172,6 +175,7 @@ export default function MenuListAddUpdate() {
         </span>
     )
     return (
+        <Suspense fallback={<div>Loading...</div>}>
         <Card
             title={title}
         >
@@ -293,5 +297,6 @@ export default function MenuListAddUpdate() {
 
             </Form>
         </Card>
+        </Suspense>
     )
 }

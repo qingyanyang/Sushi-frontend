@@ -1,13 +1,19 @@
 import { PlusOutlined, StopOutlined, ExclamationCircleFilled } from '@ant-design/icons'
-import React from 'react'
-import { useState, useEffect } from 'react'
-import { Card, Table, Button, message, Modal } from 'antd'
+import React, { useState, useEffect, Suspense } from 'react'
 import { formateDate } from '../../utils/dateUtils'
-
-import LinkButton from '../../components/LinkButton'
 import { reqRoles, reqAddRole, reqUpdateRoleName, reqDeleteRole, reqUpdateRoleAuth } from '../../api'
-import AddRoleForm from './AddRoleForm'
-import SetAuthForm from './SetAuthForm'
+
+import Card from 'antd/es/card';
+import Table from 'antd/es/table';
+import Button from 'antd/es/button';
+import message from 'antd/es/message';
+import Modal from 'antd/es/modal';
+
+// Lazy load custom components as well
+const LinkButton = React.lazy(() => import('../../components/LinkButton'));
+const AddRoleForm = React.lazy(() => import('./AddRoleForm'));
+const SetAuthForm = React.lazy(() => import('./SetAuthForm'));
+
 
 let roleSelect = {}
 export default function Index() {
@@ -213,6 +219,7 @@ export default function Index() {
 
   )
   return (
+    <Suspense fallback={<div>Loading...</div>}>
     <Card
       title={title}
       style={{
@@ -263,5 +270,6 @@ export default function Index() {
         width="370px"
       />
     </Card>
+    </Suspense>
   )
 }

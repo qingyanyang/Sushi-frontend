@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { Modal } from 'antd';
+import React, { useState, useEffect, Suspense } from 'react';
+import Modal from 'antd/es/modal';
 import { ExclamationCircleFilled, FieldTimeOutlined } from '@ant-design/icons';
-import './index.css'
-import { formateDate } from '../../utils/dateUtils'
-import storageUtils from '../../utils/storageUtils'
-import LinkButton from '../../components/LinkButton'
+import { useNavigate } from 'react-router-dom';
+import { formateDate } from '../../utils/dateUtils';
+import storageUtils from '../../utils/storageUtils';
+import LinkButton from '../../components/LinkButton';
+import './index.css';
 
 
 export default function Index() {
@@ -42,6 +42,7 @@ export default function Index() {
   }, []);
 
   return (
+    <Suspense fallback={<div>Loading...</div>}>
     <div className='header'>
       
       <div className='header-top'>
@@ -68,5 +69,6 @@ export default function Index() {
         width="350px"
       />
     </div>
+    </Suspense>
   )
 }

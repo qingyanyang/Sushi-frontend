@@ -1,12 +1,23 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, Suspense } from 'react'
 import { BarChartOutlined, SearchOutlined, ExclamationCircleFilled } from '@ant-design/icons'
 import { useNavigate, Outlet } from 'react-router-dom';
-import { Card, Table, Button, Modal, Input, Tooltip, message } from 'antd'
-import LinkButton from '../../components/LinkButton'
+
+// Lazy load Ant Design components
+import Card from 'antd/es/card';
+import Table from 'antd/es/table';
+import Button from 'antd/es/button';
+import message from 'antd/es/message';
+import Modal from 'antd/es/modal';
+import Input from 'antd/es/input';
+import Tooltip from 'antd/es/tooltip';
+
 import { reqOrders, reqSearchOrders, reqDeleteOrder } from '../../api'
 import { PAGE_SIZE } from '../../utils/constants'
 import { convertDate, convertTime } from '../../utils/dateUtils'
 import './index.css'
+
+// Lazy load custom components
+const LinkButton = React.lazy(() => import('../../components/LinkButton'));
 
 let pageNumGlobal = 1
 
@@ -179,7 +190,7 @@ export default function OrderList() {
     )
 
     return (
-        <>
+        <Suspense fallback={<div>Loading...</div>}>
             <Card
                 title={title}
                 extra={extra}
@@ -209,6 +220,6 @@ export default function OrderList() {
                 icon={<ExclamationCircleFilled />}
                 width="370px"
             />
-        </>
+        </Suspense>
     )
 }

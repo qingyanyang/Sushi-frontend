@@ -1,12 +1,26 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, Suspense } from 'react'
 import { PlusOutlined, SearchOutlined, ArrowUpOutlined, ArrowDownOutlined, MinusOutlined } from '@ant-design/icons'
 import { useNavigate, Outlet } from 'react-router-dom';
-import { Card, Table, Button, Select, message, Input, Row, Col, Modal, Form } from 'antd'
-import LinkButton from '../../components/LinkButton'
+
+// Lazy load Ant Design components
+import Card from 'antd/es/card';
+import Table from 'antd/es/table';
+import Button from 'antd/es/button';
+import message from 'antd/es/message';
+import Select from 'antd/es/select';
+import Input from 'antd/es/input';
+import Modal from 'antd/es/modal';
+import Form from 'antd/es/form';
+import Row from 'antd/es/row';
+import Col from 'antd/es/col';
+
 import { reqStorageItems, reqStorageCategory, reqSearchStorageItems, reqUpdateStorageItemStorage, reqStorageItemsSort, reqOperationRecordAdd } from '../../api'
 import { PAGE_SIZE } from '../../utils/constants'
 import { convertDate, convertTime } from '../../utils/dateUtils'
 import storageUtils from '../../utils/storageUtils'
+
+// Lazy load custom components
+const LinkButton = React.lazy(() => import('../../components/LinkButton'));
 
 let amountFinal = 0
 let pageNumGlobal = 1
@@ -298,6 +312,7 @@ export default function StorageListHome() {
 
     )
     return (
+        <Suspense fallback={<div>Loading...</div>}>
         <Card
             title={title}
             extra={extra}
@@ -352,5 +367,6 @@ export default function StorageListHome() {
 
             <Outlet />
         </Card>
+        </Suspense>
     )
 }

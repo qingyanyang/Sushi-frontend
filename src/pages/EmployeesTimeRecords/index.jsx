@@ -1,11 +1,20 @@
+import React, { useState, useEffect, Suspense } from 'react';
+
+// Lazy load Ant Design components
+import Card from 'antd/es/card';
+import Table from 'antd/es/table';
+import Button from 'antd/es/button';
+import message from 'antd/es/message';
+import Modal from 'antd/es/modal';
+import Input from 'antd/es/input';
+
 import { ExclamationCircleFilled, SearchOutlined } from '@ant-design/icons'
-import React from 'react'
-import { useState, useEffect } from 'react'
-import { Card, Table, Button, message, Modal, Input } from 'antd'
 import { convertDate, convertTime } from '../../utils/dateUtils'
 import { PAGE_SIZE } from '../../utils/constants'
-import LinkButton from '../../components/LinkButton'
 import { reqRoles, reqDeleteEmployeesRecord, reqEmployeesRecords } from '../../api'
+
+// Lazy load custom components
+const LinkButton = React.lazy(() => import('../../components/LinkButton'));
 
 export default function Index() {
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -162,7 +171,7 @@ export default function Index() {
     )
 
     return (
-        <>
+        <Suspense fallback={<div>Loading...</div>}>
             <Card
                 title={title}
                 style={{
@@ -187,6 +196,6 @@ export default function Index() {
                 icon={<ExclamationCircleFilled />}
                 width="370px"
             />
-        </>
+        </Suspense>
     )
 }

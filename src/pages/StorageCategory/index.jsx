@@ -1,12 +1,21 @@
 import { PlusOutlined, ExclamationCircleFilled } from '@ant-design/icons'
-import React from 'react'
-import { useState, useEffect } from 'react'
-import { Card, Table, Button, message, Modal } from 'antd'
+import React, { useState, useEffect, Suspense } from 'react'
+
+// Lazy load Ant Design components
+import Card from 'antd/es/card';
+import Table from 'antd/es/table';
+import Button from 'antd/es/button';
+import message from 'antd/es/message';
+import Modal from 'antd/es/modal';
+
 import { formateDate } from '../../utils/dateUtils'
 import storageUtils from '../../utils/storageUtils'
-import LinkButton from '../../components/LinkButton'
 import { reqStorageCategory, reqAddStorageCategory, reqUpdateStorageCategory, reqDeleteStorageCategory } from '../../api'
-import AddRoleForm from './AddRoleForm'
+
+// Lazy load custom components
+const LinkButton = React.lazy(() => import('../../components/LinkButton'));
+const AddRoleForm = React.lazy(() => import('./AddRoleForm'));
+
 
 export default function Index() {
     const [columns, setColumns] = useState([])
@@ -151,6 +160,7 @@ export default function Index() {
 
     )
     return (
+        <Suspense fallback={<div>Loading...</div>}>
         <Card
             title={title}
             style={{
@@ -189,5 +199,6 @@ export default function Index() {
                 width="370px"
             />
         </Card>
+        </Suspense>
     )
 }

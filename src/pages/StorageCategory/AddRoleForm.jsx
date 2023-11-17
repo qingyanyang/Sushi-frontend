@@ -1,6 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Input, Form } from 'antd';
+
+// Lazy load Ant Design components
+import Input from 'antd/es/input';
+import Form from 'antd/es/form';
 
 AddRoleForm.protoTypes = {
   getForm: PropTypes.func.isRequired

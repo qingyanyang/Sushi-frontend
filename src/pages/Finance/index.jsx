@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react'
 import { reqOrdersRank } from '../../api'
 import { useNavigate, Outlet } from 'react-router-dom';
-import { Card, Select } from 'antd';
+
+// Lazy load Ant Design components
+import Card from 'antd/es/card';
+import Select from 'antd/es/select';
 
 //do 0 to get time periods, then pass it to compare component
 

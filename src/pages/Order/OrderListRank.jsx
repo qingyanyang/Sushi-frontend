@@ -2,8 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { LeftOutlined } from '@ant-design/icons';
 import { reqOrdersRank } from '../../api'
 import { useNavigate} from 'react-router-dom';
-import { Card, Progress, Statistic,Row,Col } from 'antd';
 
+// Lazy load Ant Design components
+import Card from 'antd/es/card';
+import Progress from 'antd/es/progress';
+import Statistic from 'antd/es/statistic';
+import Row from 'antd/es/row';
+import Col from 'antd/es/col';
 
 export default function OrderListRank() {
   const [data, setData] = useState([]) 

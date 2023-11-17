@@ -1,10 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, Suspense } from 'react'
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons'
 import { useNavigate, Outlet } from 'react-router-dom';
-import { Card, Table, Button, Select, message, Input, Tooltip } from 'antd'
-import LinkButton from '../../components/LinkButton'
+
+// Lazy load Ant Design components
+import Card from 'antd/es/card';
+import Table from 'antd/es/table';
+import Button from 'antd/es/button';
+import message from 'antd/es/message';
+import Select from 'antd/es/select';
+import Input from 'antd/es/input';
+import Tooltip from 'antd/es/tooltip';
+
 import { reqItems, reqSearchItems, reqUpdateItemsStatus } from '../../api'
 import { PAGE_SIZE } from '../../utils/constants'
+
+// Lazy load custom components
+const LinkButton = React.lazy(() => import('../../components/LinkButton'));
 
 let pageNumGlobal = 1
 export default function MenuListHome() {
@@ -180,6 +191,7 @@ export default function MenuListHome() {
         </Button>
     )
     return (
+        <Suspense fallback={<div>Loading...</div>}>
         <Card
             title={title}
             extra={extra}
@@ -202,5 +214,6 @@ export default function MenuListHome() {
                 }} />
             <Outlet />
         </Card>
+        </Suspense>
     )
 }

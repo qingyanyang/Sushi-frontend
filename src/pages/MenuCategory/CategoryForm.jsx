@@ -1,5 +1,8 @@
 import React, { useEffect, useRef } from 'react';
-import { Select, Form, Input } from 'antd';
+
+import Form from 'antd/es/form';
+import Select from 'antd/es/select';
+import Input from 'antd/es/input';
 
 export default function CategoryForm({ categorys, parentId, getForm }) {
 
